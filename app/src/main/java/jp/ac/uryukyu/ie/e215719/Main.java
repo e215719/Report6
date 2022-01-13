@@ -3,12 +3,14 @@ package jp.ac.uryukyu.ie.e215719;
 import java.util.Scanner;
 
 public class Main {
+    public static final String PROMPT_FORMST = "%sの番です。%dターン目>";
     public static void main(String[] args) {
         Board board = new Board();
         Scanner scanner = new Scanner(System.in);
         String line;
         while (true) {
-            System.out.println(board.getDisplayString()); //盤を出力
+            System.out.print(board.getDisplayString()); //盤を出力
+            System.out.format(PROMPT_FORMST, board.isRedTurn() ? "赤" : "青", board.getMoveCount());
             line = scanner.nextLine(); //一行読み取り
             board.move(line); //駒を動かす
             System.out.println(line);

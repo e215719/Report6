@@ -6,6 +6,7 @@ public class Board {
     
     public static ArrayList<Piece> pieces;
     public String[][] gameboard;
+    public static int counter = 1; //ターン情報
 
     public Board() {
         this.pieces = new ArrayList<>(); //駒のリスト
@@ -84,6 +85,7 @@ public class Board {
         int activepiece = grabPiece(fromx, fromy);
         pieces.get(activepiece).setX(tox);
         pieces.get(activepiece).setY(toy);
+        counter = counter + 1;
     }
 
     public int grabPiece(int x, int y) { //駒を掴む
@@ -93,6 +95,14 @@ public class Board {
             }
         }
         return 9; //エラー解決
+    }
+
+    public boolean isRedTurn() {
+        return counter % 2 == 1;
+    }
+
+    public int getMoveCount() {
+        return (int) Math.floor((counter + 1) / 2);
     }
 
 }
