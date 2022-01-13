@@ -19,6 +19,11 @@ public class Board {
     }
 
     public String getDisplayString() { //盤を作成する
+        for (int j=0; j<3; j++) { //盤情報をnullに
+            for (int i=0; i<3; i++) {
+                gameboard[i][j] = null;
+            }
+        }
         for (int a=0; a<pieces.size(); a++) { //駒をリストに追加
             int i = pieces.get(a).getX();
             int j = pieces.get(a).getY();
@@ -61,6 +66,33 @@ public class Board {
         sb.append("   a   b   c"); //下の座標を表示
         sb.append("\n");
         return sb.toString();
+    }
+
+    public void move(String moveText) { //駒を動かす
+        String[] words = moveText.split(",");
+        String from = words[0]; //駒の出発地
+        String to = words[1]; //駒の到着地
+        char tempfrx = from.charAt(0);
+        char tempfry = from.charAt(1);
+        int fromx = tempfrx - 97; //ASCIIコードに変換し計算で盤に合わせる
+        int fromy = tempfry - 49;
+        char temptox = to.charAt(0);
+        char temptoy = to.charAt(1);
+        int tox = temptox - 97; //ASCIIコードに変換し計算で盤に合わせる
+        int toy = temptoy - 49;
+
+        int activepiece = grabPiece(fromx, fromy);
+        pieces.get(activepiece).setX(tox);
+        pieces.get(activepiece).setY(toy);
+    }
+
+    public int grabPiece(int x, int y) { //駒を掴む
+        for (int a=0; a<pieces.size(); a++) {
+            if (pieces.get(a).getX()==x && pieces.get(a).getY()==y) {
+                return a;
+            }
+        }
+        return 9; //エラー解決
     }
 
 }

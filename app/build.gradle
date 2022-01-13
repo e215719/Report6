@@ -40,3 +40,7 @@ jar {
         attributes  "Main-Class": "jp.ac.uryukyu.ie.e215719.Main"
     }
 }
+
+run {
+    standardInput = System.in
+}
