@@ -1,6 +1,7 @@
 package jp.ac.uryukyu.ie.e215719;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Board {
     
@@ -128,6 +129,30 @@ public class Board {
 
     public int getMoveCount() { //ターンをカウントする
         return (int) Math.floor((counter + 1) / 2);
+    }
+
+    public boolean end() { //盤の状況が勝ちの条件を満たしているか判定する
+        if ( Objects.equals(gameboard[0][0], "R") && Objects.equals(gameboard[0][1], "R") && Objects.equals(gameboard[0][2], "R")||
+             Objects.equals(gameboard[1][0], "R") && Objects.equals(gameboard[1][1], "R") && Objects.equals(gameboard[1][2], "R")||
+             Objects.equals(gameboard[2][0], "R") && Objects.equals(gameboard[2][1], "R") && Objects.equals(gameboard[2][2], "R")||
+             Objects.equals(gameboard[0][1], "R") && Objects.equals(gameboard[1][1], "R") && Objects.equals(gameboard[2][1], "R")||
+             Objects.equals(gameboard[0][2], "R") && Objects.equals(gameboard[1][2], "R") && Objects.equals(gameboard[2][2], "R")||
+             Objects.equals(gameboard[0][0], "R") && Objects.equals(gameboard[1][1], "R") && Objects.equals(gameboard[2][2], "R")||
+             Objects.equals(gameboard[2][0], "R") && Objects.equals(gameboard[1][1], "R") && Objects.equals(gameboard[0][2], "R")){
+            System.out.println("赤の勝ちです");
+            return true;
+        }
+        if ( Objects.equals(gameboard[0][0], "B") && Objects.equals(gameboard[0][1], "B") && Objects.equals(gameboard[0][2], "B")||
+             Objects.equals(gameboard[1][0], "B") && Objects.equals(gameboard[1][1], "B") && Objects.equals(gameboard[1][2], "B")||
+             Objects.equals(gameboard[2][0], "B") && Objects.equals(gameboard[2][1], "B") && Objects.equals(gameboard[2][2], "B")||
+             Objects.equals(gameboard[0][0], "B") && Objects.equals(gameboard[1][0], "B") && Objects.equals(gameboard[2][0], "B")||
+             Objects.equals(gameboard[0][1], "B") && Objects.equals(gameboard[1][1], "B") && Objects.equals(gameboard[2][1], "B")||
+             Objects.equals(gameboard[0][0], "B") && Objects.equals(gameboard[1][1], "B") && Objects.equals(gameboard[2][2], "B")||
+             Objects.equals(gameboard[2][0], "B") && Objects.equals(gameboard[1][1], "B") && Objects.equals(gameboard[0][2], "B")){
+            System.out.println("青の勝ちです");
+            return true;
+        }
+        return false;
     }
 
 }
