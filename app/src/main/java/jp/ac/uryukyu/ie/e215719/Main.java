@@ -12,8 +12,8 @@ public class Main {
             System.out.print(board.getDisplayString()); //盤を出力
             System.out.format(PROMPT_FORMST, board.isRedTurn() ? "赤" : "青", board.getMoveCount());
             line = scanner.nextLine(); //一行読み取り
-            board.move(line); //駒を動かす
             System.out.println(line);
+            board.move(line); //駒を動かす
         }
     }
 }

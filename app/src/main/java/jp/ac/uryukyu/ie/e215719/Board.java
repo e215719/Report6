@@ -11,12 +11,12 @@ public class Board {
     public Board() {
         this.pieces = new ArrayList<>(); //駒のリスト
         this.gameboard = new String[3][3]; //盤情報リスト
-        pieces.add(new Red(0, 0));
-        pieces.add(new Red(1, 0));
-        pieces.add(new Red(2, 0));
-        pieces.add(new Blue(0, 2));
-        pieces.add(new Blue(1, 2));
-        pieces.add(new Blue(2, 2));
+        pieces.add(new Red(0, 0, true));
+        pieces.add(new Red(1, 0, true));
+        pieces.add(new Red(2, 0, true));
+        pieces.add(new Blue(0, 2, false));
+        pieces.add(new Blue(1, 2, false));
+        pieces.add(new Blue(2, 2, false));
     }
 
     public String getDisplayString() { //盤を作成する
@@ -82,10 +82,35 @@ public class Board {
         int tox = temptox - 97; //ASCIIコードに変換し計算で盤に合わせる
         int toy = temptoy - 49;
 
-        int activepiece = grabPiece(fromx, fromy);
-        pieces.get(activepiece).setX(tox);
-        pieces.get(activepiece).setY(toy);
-        counter = counter + 1;
+        if (chackPiece(fromx, fromy)) { //駒があるかチェックする
+            int activepiece = grabPiece(fromx, fromy); //駒を掴む
+            if (isRedTurn() == pieces.get(activepiece).isRed()) { //自分の駒か判定する
+                if (pieces.get(activepiece).isValid(fromx, fromy, tox, toy)) { //動かせる座標なのか判定する
+                    if (chackPiece(tox, toy) == false) {
+                        pieces.get(activepiece).setX(tox);
+                        pieces.get(activepiece).setY(toy);
+                        counter = counter + 1;
+                    } else {
+                        System.out.println("他の駒があります");
+                    }
+                } else {
+                    System.out.println("この駒はそこに移動できない");
+                }
+            } else {
+                System.out.println("自分の駒ではありません");
+            }
+        } else {
+            System.out.println("そこに駒はありません");
+        }
+    }
+    
+    public static boolean chackPiece(int x, int y) { //その座標にある駒を判別する
+        for (int a=0; a<pieces.size(); a++) {
+            if (pieces.get(a).getX()==x && pieces.get(a).getY()==y) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int grabPiece(int x, int y) { //駒を掴む
@@ -97,11 +122,11 @@ public class Board {
         return 9; //エラー解決
     }
 
-    public boolean isRedTurn() {
+    public boolean isRedTurn() { //赤のターンか判定する
         return counter % 2 == 1;
     }
 
-    public int getMoveCount() {
+    public int getMoveCount() { //ターンをカウントする
         return (int) Math.floor((counter + 1) / 2);
     }
 
